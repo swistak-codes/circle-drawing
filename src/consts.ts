@@ -1,7 +1,9 @@
 export const SIZE = 25;
 export const BORDER_LIMIT = 5;
-export const MIN_RADIUS = 2;
+export const MIN_RADIUS = 1;
 export const MAX_RADIUS = Math.floor(SIZE / 2);
+export const CENTER = [Math.floor(SIZE / 2), Math.floor(SIZE / 2)];
 export const MAX_ZOOM = 20;
 export const MIN_ZOOM = 1;
+export const ANIMATION_DELAY = 250;
 export const COLOR = 'black';

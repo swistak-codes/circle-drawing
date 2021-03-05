@@ -1,18 +1,36 @@
 <script lang="ts">
-    import { console, frameBuffer, radius, zoom, canHaveBorder, userWantsBordered, isAnimated, blocked } from '../store';
+    import { console, frameBuffer, zoom, canHaveBorder, userWantsBordered, blocked } from '../store';
     import { clearBuffer } from '../helpers/clearBuffer';
-    import { MIN_ZOOM, MAX_ZOOM, MIN_RADIUS, MAX_RADIUS } from '../consts';
+    import { MIN_ZOOM, MAX_ZOOM, MIN_RADIUS, MAX_RADIUS, CENTER, ANIMATION_DELAY } from '../consts';
+    import type { IAlgorithm } from '../types';
 
-    function handleDraw() {
+    export let algorithm: IAlgorithm;
+    let isAnimated = true;
+    let radius = MAX_RADIUS;
+
+    async function wait() {
+        if (isAnimated) {
+            await new Promise(resolve => window.setTimeout(() => resolve(), ANIMATION_DELAY));
+        }
+    }
+
+    async function handleDraw() {
         console.set([]);
-        frameBuffer.set(clearBuffer());
+        $frameBuffer = clearBuffer();
+        $blocked = true;
+        await wait();
+        for (const buffer of algorithm.draw(CENTER, radius)) {
+            $frameBuffer = buffer;
+            await wait();
+        }
+        $blocked = false;
     }
 </script>
 
 <div class="container">
     <div class="item">
         <label for="radius">Promień:</label>
-        <input type="number" min={MIN_RADIUS} max={MAX_RADIUS} bind:value={$radius} class="slider" id="radius" disabled={$blocked}/>
+        <input type="number" min={MIN_RADIUS} max={MAX_RADIUS} bind:value={radius} class="slider" id="radius" disabled={$blocked}/>
     </div>
     <div class="item">
         <label for="zoom">Powiększenie:</label>
@@ -24,7 +42,7 @@
     </div>
     <div class="item">
         <label for="animate" id="animate-label">Animuj:</label>
-        <input type="checkbox" id="animate" bind:checked={$isAnimated} disabled={$blocked} />
+        <input type="checkbox" id="animate" bind:checked={isAnimated} disabled={$blocked} />
     </div>
     <div class="item">
         <button type="button" on:click={handleDraw} disabled={$blocked}>Rysuj</button>

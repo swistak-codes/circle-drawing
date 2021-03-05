@@ -2,14 +2,17 @@
     import Screen from './Screen.svelte';
     import Controls from './Controls.svelte';
     import Console from './Console.svelte';
+    import type { IAlgorithm } from '../types';
+
+    export let algorithm: IAlgorithm;
 </script>
 
 <main>
-<!--    <h1>{algorithm.name}</h1>-->
+    <h1>{algorithm.name}</h1>
     <div class="screen">
         <Screen />
     </div>
-    <Controls />
+    <Controls algorithm={algorithm} />
     <Console />
 </main>
 

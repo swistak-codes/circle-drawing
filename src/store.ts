@@ -1,12 +1,10 @@
 import { writable, derived } from 'svelte/store';
 import { clearBuffer } from './helpers/clearBuffer';
-import { BORDER_LIMIT, MAX_RADIUS } from './consts';
+import { BORDER_LIMIT } from './consts';
 
 export const frameBuffer = writable(clearBuffer());
 export const zoom = writable(20);
 export const userWantsBordered = writable(true);
-export const isAnimated = writable(true);
-export const radius = writable(MAX_RADIUS);
 export const console = writable<string[]>([]);
 export const blocked = writable(false);
 
