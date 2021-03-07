@@ -13,7 +13,7 @@ export class MidpointIncremental extends BaseAlgorithm {
         let deltaE = 3;
         let deltaSE = 5 - radius * 2;
 
-        console.update((value) => [...value, `x = ${x}; y = ${y}, d = ${d}`]);
+        console.update((value) => [...value, `x = ${x}; y = ${y}, d = ${d}, deltaE = ${deltaE}, deltaSE = ${deltaSE}`]);
         this.drawPoints([x, y], center, result);
         yield result;
 
@@ -30,7 +30,7 @@ export class MidpointIncremental extends BaseAlgorithm {
                 x++;
                 y--;
             }
-            console.update((value) => [...value, `x = ${x}; y = ${y}, d = ${d}`]);
+            console.update((value) => [...value, `x = ${x}; y = ${y}, d = ${d}, deltaE = ${deltaE}, deltaSE = ${deltaSE}`]);
             this.drawPoints([x, y], center, result);
             yield result;
         }
